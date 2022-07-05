@@ -1,8 +1,9 @@
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
 
 import useCachedResources from "./hooks/useCachedResources";
 import Colors from "./constants/Colors";
+import HeaderText from "./components/HeaderText";
+import TaskInputBox from "./components/TaskInputBox";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -12,10 +13,9 @@ export default function App() {
   } else {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.defaultText}>
-          Open up App.tsx to start working on your app!
-        </Text>
-        <StatusBar style="auto" />
+        <HeaderText />
+        <TaskInputBox />
+        <StatusBar backgroundColor={Colors.primaryColor} />
       </SafeAreaView>
     );
   }
@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
     alignItems: "center",
-    justifyContent: "center",
   },
   defaultText: {
     fontFamily: "patrick-hand",
