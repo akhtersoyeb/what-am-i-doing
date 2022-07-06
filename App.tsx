@@ -15,7 +15,10 @@ export default function App() {
       <SafeAreaView style={styles.container}>
         <HeaderText />
         <TaskInputBox />
-        <StatusBar backgroundColor={Colors.primaryColor} />
+        <StatusBar
+          backgroundColor={Colors.light.background}
+          barStyle="dark-content"
+        />
       </SafeAreaView>
     );
   }
@@ -24,7 +27,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.light.background,
     alignItems: "center",
   },
   defaultText: {
