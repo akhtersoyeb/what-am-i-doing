@@ -2,12 +2,13 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import Layout from "../constants/Layout";
 import Colors from "../constants/Colors";
 
-export default function HeaderText() {
+export default function HeaderWithText() {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>What Am I Doing ?</Text>
       <Image
         style={styles.avatarImage}
+        resizeMode="contain"
         source={require("../assets/images/avatar-thinking.png")}
       />
     </View>
