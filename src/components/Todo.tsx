@@ -4,10 +4,10 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Colors from "../theme/colors";
 
 interface TodoProps {
-  id: number;
+  id: string;
   text: string;
   importance: "low" | "medium" | "high" | "very high";
-  isChecked: boolean;
+  isCompleted: boolean;
 }
 
 const Todo = (props: TodoProps) => {
@@ -20,14 +20,13 @@ const Todo = (props: TodoProps) => {
         fillColor={fillColor}
         iconStyle={styles.todoIcon}
         textStyle={{
-          color: props.isChecked
+          color: props.isCompleted
             ? Colors.light.checkedTodoText
             : Colors.light.unCheckedTodoText,
         }}
         text={props.text}
-        isChecked={props.isChecked}
-        onPress={(isChecked: boolean) => {
-        }}
+        isChecked={props.isCompleted}
+        onPress={() => {}}
       />
     </View>
   );

@@ -6,7 +6,7 @@ import Focus from "../screens/focus/Focus";
 import Matrix from "../screens/matrix/Matrix";
 import Settings from "../screens/settings/Settings";
 import Tasks from "../screens/tasks/Tasks";
-import TasksDrawer from "./tasksDrawer";
+import TasksStack from "./tasksStack";
 
 // Screen names
 const TASKS = "Tasks inbox";
@@ -44,7 +44,7 @@ const BottomTab = () => {
     >
       <Tab.Screen
         name={TASKS}
-        component={TasksDrawer}
+        component={TasksStack}
         options={{ headerShown: false }}
       />
       <Tab.Screen name={CALENDAR} component={Calendar} />

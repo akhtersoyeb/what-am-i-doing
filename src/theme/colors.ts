@@ -1,6 +1,7 @@
 const Colors = {
   light: {
     background: 'white',
+    primaryColors: 'blue',
     todoFill: 'gray',
     todoLow: 'green',
     todoMedium: 'purple',
