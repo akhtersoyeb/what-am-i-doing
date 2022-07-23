@@ -17,39 +17,17 @@ type TodoType = {
 
 type TodoStorageType = Record<TodoType["id"], TodoType>;
 
-// const TODODATA: TodoDataStructure[] = [
-//   {
-//     text: "Get the milk",
-//     importance: "medium",
-//     isChecked: false,
-//   },
-//   {
-//     text: "Start coding the app project",
-//     importance: "high",
-//     isChecked: false,
-//   },
-//   {
-//     text: "Visit the dentist for a checkup",
-//     importance: "very high",
-//     isChecked: true,
-//   },
-//   {
-//     text: "Clean the room",
-//     importance: "low",
-//     isChecked: true,
-//   },
-// ];
-
 const Tasks = () => {
   const [todos, setTodos] = useState({});
   const [isDataReady, setIsDataReady] = useState(false);
-  // const [newTodoObject]
   const [inputText, setInputText] = useState("");
 
+  // Load todos for the first render
   useEffect(() => {
     loadTodos();
   }, []);
 
+  // Save todos locally when todos state changes
   useEffect(() => {
     saveTodos(todos);
   }, [todos]);
@@ -65,7 +43,15 @@ const Tasks = () => {
     }
   };
 
-  const addTodo = () => {
+  const saveTodos = async (newTodos: TodoStorageType) => {
+    try {
+      await AsyncStorage.setItem("@todos", JSON.stringify(newTodos));
+    } catch (err) {
+      alert("Error while saving new todos");
+    }
+  };
+
+  const addNewTodo = () => {
     if (inputText) {
       const ID = uuid.v1();
       const newTodoObject = {
@@ -76,16 +62,7 @@ const Tasks = () => {
           isCompleted: false,
         },
       };
-
       setTodos({ ...todos, ...newTodoObject });
-    }
-  };
-
-  const saveTodos = async (newTodos: TodoStorageType) => {
-    try {
-      await AsyncStorage.setItem("@todos", JSON.stringify(newTodos));
-    } catch (err) {
-      alert("Error while saving new todos");
     }
   };
 
@@ -102,9 +79,8 @@ const Tasks = () => {
       {todos
         ? (
           <FlatList
-            data={_values(todos)}
-            // contentContainerStyle={}
-            renderItem={({ item }) => {
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }: { item: TodoType }) => {
               return (
                 <Todo
                   id={item.id}
@@ -114,7 +90,7 @@ const Tasks = () => {
                 />
               );
             }}
-            keyExtractor={(item) => item.id}
+            data={_values(todos) as TodoType[]}
           />
         )
         : <Text>No todo to show</Text>}
@@ -125,7 +101,7 @@ const Tasks = () => {
           value={inputText}
           placeholder="Add new task"
         />
-        <TouchableOpacity onPress={addTodo}>
+        <TouchableOpacity onPress={addNewTodo}>
           <Text>Submit</Text>
         </TouchableOpacity>
       </View>
