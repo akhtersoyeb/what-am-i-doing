@@ -40,6 +40,7 @@ const BottomTab = () => {
           return <Icon name={iconName} size={size} color={color} />;
         },
         tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
       })}
     >
       <Tab.Screen

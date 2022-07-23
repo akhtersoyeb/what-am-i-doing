@@ -2,11 +2,18 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import { values as _values } from "lodash";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Colors from "../../theme/colors";
 import Todo from "../../components/Todo";
-import { FlatList, TextInput } from "react-native-gesture-handler";
 import FloatingButton from "../../components/FloatingButton";
+import { ADDNEWTASK } from "../../navigation/tasksStack";
 
 type TodoType = {
   id: string;
@@ -17,12 +24,16 @@ type TodoType = {
 
 type TodoStorageType = Record<TodoType["id"], TodoType>;
 
-const Tasks = () => {
+interface TasksProps {
+  navigation: any;
+}
+
+const Tasks = (props: TasksProps) => {
   const [todos, setTodos] = useState({});
   const [isDataReady, setIsDataReady] = useState(false);
-  const [inputText, setInputText] = useState("");
+  // const [inputText, setInputText] = useState("");
 
-  // Load todos for the first render
+  // Load todos from local storage when app starts
   useEffect(() => {
     loadTodos();
   }, []);
@@ -51,7 +62,7 @@ const Tasks = () => {
     }
   };
 
-  const addNewTodo = () => {
+  const addNewTodo = (inputText: string) => {
     if (inputText) {
       const ID = uuid.v1();
       const newTodoObject = {
@@ -74,6 +85,12 @@ const Tasks = () => {
     );
   }
 
+  const handleFloatingButton = () => {
+    props.navigation.navigate("Add New Task", {
+      saveItem: addNewTodo,
+    });
+  };
+
   return (
     <View style={styles.container}>
       {todos
@@ -93,20 +110,10 @@ const Tasks = () => {
             data={_values(todos) as TodoType[]}
           />
         )
-        : <Text>No todo to show</Text>}
-      {/* Form to add new task */}
-      <View>
-        <TextInput
-          onChangeText={setInputText}
-          value={inputText}
-          placeholder="Add new task"
-        />
-        <TouchableOpacity onPress={addNewTodo}>
-          <Text>Submit</Text>
-        </TouchableOpacity>
-      </View>
+        : <Text>No tasks to show</Text>}
+
       <FloatingButton
-        handleClick={() => {}}
+        handleClick={handleFloatingButton}
       />
     </View>
   );

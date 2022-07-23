@@ -8,7 +8,7 @@ interface FloatingButtonProps {
 
 const FloatingButton = (props: FloatingButtonProps) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={props.handleClick}>
       <Icon size={50} name="add-circle" color={Colors.light.primaryColors} />
     </TouchableOpacity>
   );
